@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nikki, Will You? 💍❤️</title>
+    <title>Nikki, My Home ❤️</title>
     <style>
         body {
             display: flex; justify-content: center; align-items: center;
@@ -16,22 +16,22 @@
         /* Ambient Glow Background */
         .bg-glow {
             position: absolute; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(255,0,77,0.15) 0%, rgba(0,0,0,1) 70%);
+            background: radial-gradient(circle, rgba(255,0,77,0.2) 0%, rgba(0,0,0,1) 70%);
             z-index: -1; animation: pulseGlow 4s infinite alternate;
         }
         @keyframes pulseGlow { from { opacity: 0.5; } to { opacity: 1; } }
 
         .card {
-            background: rgba(20, 0, 0, 0.7); backdrop-filter: blur(25px);
+            background: rgba(20, 0, 0, 0.75); backdrop-filter: blur(25px);
             padding: 35px; border-radius: 50px;
-            box-shadow: 0 0 80px rgba(255, 77, 109, 0.4); 
+            box-shadow: 0 0 80px rgba(255, 77, 109, 0.5); 
             text-align: center; z-index: 10; width: 85%; max-width: 400px; 
             border: 2px solid #ff4d6d; position: relative;
         }
 
         .ring-container {
-            font-size: 80px; margin-bottom: 20px;
-            filter: drop-shadow(0 0 20px #ff4d6d);
+            font-size: 85px; margin-bottom: 20px;
+            filter: drop-shadow(0 0 25px #ff4d6d);
             animation: ringSpin 4s infinite linear;
         }
         @keyframes ringSpin {
@@ -51,19 +51,9 @@
             padding: 8px 15px; border-radius: 50px; cursor: pointer; margin-top: 25px;
         }
 
-        /* Love Ripple Effect */
-        .ripple {
-            position: absolute; border: 2px solid #ff4d6d; border-radius: 50%;
-            pointer-events: none; animation: rippleEffect 1s linear forwards;
-            z-index: 100;
-        }
-        @keyframes rippleEffect {
-            to { transform: scale(4); opacity: 0; }
-        }
-
         /* Floating Memories p1-p14 */
         .float-img {
-            position: absolute; bottom: -150px; width: 90px; height: 120px;
+            position: absolute; bottom: -150px; width: 95px; height: 125px;
             object-fit: cover; border-radius: 15px; border: 3px solid #ff4d6d;
             z-index: 5; animation: floatUp 8s linear forwards;
             box-shadow: 0 10px 30px rgba(255, 77, 109, 0.4);
@@ -71,22 +61,27 @@
         @keyframes floatUp { to { transform: translateY(-140vh) rotate(360deg); } }
 
         #celebration { display: none; }
-        #typewriter { font-size: 18px; color: #ffb3c1; margin: 25px 0; font-weight: bold; line-height: 1.6; }
-        .days-since { font-size: 12px; color: #ff4d6d; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+        #typewriter { font-size: 19px; color: #ffb3c1; margin: 25px 0; font-weight: bold; line-height: 1.6; }
+        .tagline { font-size: 13px; color: #ff4d6d; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; font-weight: bold;}
+        
+        @keyframes flyOut { to { transform: translateY(-100px) scale(2); opacity: 0; } }
+        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.1);} 100% {transform: scale(1);} }
     </style>
 </head>
-<body onclick="createRipple(event)">
+<body onclick="createHeart(event)">
 
     <div class="bg-glow"></div>
 
     <div class="card">
-        <div class="days-since">Since 5 July 2019</div>
+        <div class="tagline">Beyond Time & Space</div>
         
         <div id="asking">
             <div class="ring-container">💍</div>
-            <h1 style="font-size: 24px;">Nikki, I want to grow old with you...</h1>
-            <p style="font-style: italic; color: #ffb3c1;">Every heartbeat of mine says your name. <br> Will you be my Forever?</p>
-            <button id="yesBtn">YES! 💍❤️</button>
+            <h1 style="font-size: 24px; color: #fff; margin-bottom: 15px;">Nikki, I have a confession...</h1>
+            <p style="font-style: italic; color: #ffb3c1; font-size: 20px; line-height: 1.4; margin-bottom: 30px;">
+                "Tum meri habit nahi ho, <br> tum meri home feeling ho." 💍❤️
+            </p>
+            <button id="yesBtn">YES! I'm Home ❤️</button>
             <br>
             <button id="noBtn">No</button>
         </div>
@@ -94,7 +89,7 @@
         <div id="celebration">
             <div class="ring-container">💖💍💖</div>
             <div id="typewriter"></div>
-            <h2 style="color:#ff4d6d; animation: pulse 1s infinite;">The Best "YES" Ever!</h2>
+            <h2 style="color:#ff4d6d; animation: pulse 1s infinite; margin-top: 20px;">Infinite Love Locked!</h2>
             <p style="font-size: 14px; opacity: 0.7;">Now and Forever, I'm yours. ❤️</p>
         </div>
     </div>
@@ -105,54 +100,39 @@
         const asking = document.getElementById('asking');
         const celebration = document.getElementById('celebration');
 
-        // Touch/Click Ripple Effect
-        function createRipple(e) {
-            const rip = document.createElement("div");
-            rip.className = "ripple";
-            rip.style.left = e.clientX + "px";
-            rip.style.top = e.clientY + "px";
-            rip.style.width = "20px"; rip.style.height = "20px";
-            document.body.appendChild(rip);
-            setTimeout(() => rip.remove(), 1000);
+        // Click/Touch to create hearts
+        function createHeart(e) {
+            const heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.style.position = "absolute";
+            heart.style.left = (e.clientX || e.touches[0].clientX) + "px";
+            heart.style.top = (e.clientY || e.touches[0].clientY) + "px";
+            heart.style.fontSize = "22px";
+            heart.style.pointerEvents = "none";
+            heart.style.color = "#ff4d6d";
+            heart.style.animation = "flyOut 1s linear forwards";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1000);
         }
 
-        // No button escape
+        // No button behavior (Escape)
         noBtn.onmouseover = () => {
             noBtn.style.position = "absolute";
-            noBtn.style.left = Math.random() * 80 + "vw";
-            noBtn.style.top = Math.random() * 80 + "vh";
+            noBtn.style.left = Math.random() * 85 + "vw";
+            noBtn.style.top = Math.random() * 85 + "vh";
         };
 
         yesBtn.onclick = () => {
             asking.style.display = "none";
             celebration.style.display = "block";
-            startInfiniteLove();
+            startInfiniteGallery();
             typeWriter();
         };
 
-        function startInfiniteLove() {
+        function startInfiniteGallery() {
             const photos = ['p1.jpeg','p2.jpeg','p3.jpeg','p4.jpeg','p5.jpeg','p6.jpeg','p7.jpeg','p8.jpeg','p9.jpeg','p10.jpeg','p11.jpeg','p12.jpeg','p13.jpeg','p14.jpeg'];
             
-            // Explosion of Hearts
-            for(let i=0; i<40; i++) {
-                setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.innerHTML = "❤️";
-                    heart.style.position = "absolute";
-                    heart.style.left = "50%"; heart.style.top = "50%";
-                    heart.style.fontSize = Math.random() * 30 + 10 + "px";
-                    heart.style.transition = "3s ease-out";
-                    document.body.appendChild(heart);
-                    
-                    setTimeout(() => {
-                        heart.style.transform = `translate(${(Math.random()-0.5)*1000}px, ${(Math.random()-0.5)*1000}px) rotate(360deg)`;
-                        heart.style.opacity = "0";
-                    }, 100);
-                    setTimeout(() => heart.remove(), 3000);
-                }, i * 50);
-            }
-
-            // Floating Gallery
+            // Floating Gallery Logic
             setInterval(() => {
                 const img = document.createElement('img');
                 img.src = photos[Math.floor(Math.random() * photos.length)];
@@ -161,17 +141,35 @@
                 document.body.appendChild(img);
                 setTimeout(() => img.remove(), 8000);
             }, 1500);
+
+            // Explosion of hearts on Yes
+            for(let i=0; i<30; i++) {
+                setTimeout(() => {
+                    const h = document.createElement('div');
+                    h.innerHTML = "❤️";
+                    h.style.position = "absolute";
+                    h.style.left = "50%"; h.style.top = "50%";
+                    h.style.fontSize = "25px";
+                    h.style.transition = "2s ease-out";
+                    document.body.appendChild(h);
+                    setTimeout(() => {
+                        h.style.transform = `translate(${(Math.random()-0.5)*800}px, ${(Math.random()-0.5)*800}px)`;
+                        h.style.opacity = "0";
+                    }, 50);
+                    setTimeout(() => h.remove(), 2000);
+                }, i * 100);
+            }
         }
 
         function typeWriter() {
-            const text = "Nikki, 2400 se zyada din tumhare saath bitane ke baad bhi, mera dil aaj bhi tumhare liye bilkul waise hi dhadakta hai jaise pehli baar... I love you to the moon and back! ❤️💍";
+            const text = "Aapke bina har jagah paraya lagta hai Nikki. Ab se aur hamesha ke liye, tum hi mera sukoon ho aur tum hi mera ghar. I love you! ❤️💍";
             let i = 0;
             const container = document.getElementById('typewriter');
             function play() {
                 if (i < text.length) {
                     container.innerHTML += text.charAt(i);
                     i++;
-                    setTimeout(play, 60);
+                    setTimeout(play, 65);
                 }
             }
             play();
