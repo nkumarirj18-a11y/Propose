@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nikki, My Home & My World ❤️</title>
+    <title>Nikki, My Home ❤️</title>
     <style>
         body {
             display: flex; justify-content: center; align-items: center;
@@ -13,7 +13,6 @@
             cursor: crosshair;
         }
 
-        /* Animated Deep Red Background */
         .bg-animate {
             position: absolute; width: 100%; height: 100%;
             background: radial-gradient(circle, #3d0101 0%, #000000 100%);
@@ -52,7 +51,16 @@
             padding: 8px 15px; border-radius: 50px; cursor: pointer; margin-top: 30px;
         }
 
-        /* Shining Floating Photos */
+        /* Explosion Particle */
+        .particle {
+            position: absolute; pointer-events: none; z-index: 100;
+            animation: explode 3s ease-out forwards;
+        }
+        @keyframes explode {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) rotate(360deg) scale(0); opacity: 0; }
+        }
+
         .float-img {
             position: absolute; bottom: -200px; width: 105px; height: 135px;
             object-fit: cover; border-radius: 20px; border: 2px solid rgba(255, 255, 255, 0.3);
@@ -61,15 +69,14 @@
         }
         @keyframes floatUp { to { transform: translateY(-150vh) rotate(360deg); } }
 
-        /* Magic Trail Effect */
-        .magic-star {
+        .magic-heart {
             position: absolute; pointer-events: none;
             animation: starFade 1s linear forwards; z-index: 999;
-            color: #ff4d6d; font-size: 18px;
+            color: #ff4d6d; font-size: 20px;
         }
         @keyframes starFade {
-            0% { transform: scale(1) rotate(0); opacity: 1; }
-            100% { transform: scale(2) rotate(180deg); opacity: 0; }
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
         }
 
         #celebration { display: none; }
@@ -77,12 +84,12 @@
         .tagline { font-size: 12px; color: #ff4d6d; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 15px; font-weight: bold;}
     </style>
 </head>
-<body onmousemove="spawnStar(event)" ontouchmove="spawnStar(event)">
+<body onmousemove="spawnHeart(event)" ontouchmove="spawnHeart(event)">
 
     <div class="bg-animate"></div>
 
     <div class="card">
-        <div class="tagline">Locked Forever</div>
+        <div class="tagline">Pure Eternal Love</div>
         
         <div id="asking">
             <div class="ring-container">💍</div>
@@ -98,7 +105,7 @@
         <div id="celebration">
             <div class="ring-container">👨‍❤️‍💋‍👨</div>
             <div id="typewriter"></div>
-            <h2 style="color:#ff4d6d; animation: pulse 1s infinite; margin-top: 25px; font-size: 26px;">I Love You, Baby! ❤️</h2>
+            <h2 style="color:#ff4d6d; animation: pulse 1s infinite; margin-top: 25px; font-size: 26px;">I Love You, Nikki! ❤️</h2>
         </div>
     </div>
 
@@ -108,18 +115,16 @@
         const asking = document.getElementById('asking');
         const celebration = document.getElementById('celebration');
 
-        // Magic Star/Heart Trail
-        function spawnStar(e) {
-            const star = document.createElement("div");
-            star.className = "magic-star";
-            star.innerHTML = Math.random() > 0.5 ? "❤️" : "✨";
-            star.style.left = (e.pageX || e.touches[0].pageX) + "px";
-            star.style.top = (e.pageY || e.touches[0].pageY) + "px";
-            document.body.appendChild(star);
-            setTimeout(() => star.remove(), 1000);
+        function spawnHeart(e) {
+            const h = document.createElement("div");
+            h.className = "magic-heart";
+            h.innerHTML = "❤️";
+            h.style.left = (e.pageX || e.touches[0].pageX) + "px";
+            h.style.top = (e.pageY || e.touches[0].pageY) + "px";
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 1000);
         }
 
-        // No button escape
         noBtn.onmouseover = () => {
             noBtn.style.position = "absolute";
             noBtn.style.left = Math.random() * 80 + "vw";
@@ -129,14 +134,32 @@
         yesBtn.onclick = () => {
             asking.style.display = "none";
             celebration.style.display = "block";
-            startFinalCelebration();
+            createExplosion();
+            startGallery();
             typeWriter();
         };
 
-        function startFinalCelebration() {
+        function createExplosion() {
+            const items = ['❤️', '💖', '💍', '✨', '🌸'];
+            for (let i = 0; i < 70; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.innerHTML = items[Math.floor(Math.random() * items.length)];
+                p.style.left = '50vw';
+                p.style.top = '50vh';
+                // Random directions for explosion
+                const x = (Math.random() - 0.5) * 1000;
+                const y = (Math.random() - 0.5) * 1000;
+                p.style.setProperty('--x', `${x}px`);
+                p.style.setProperty('--y', `${y}px`);
+                p.style.fontSize = Math.random() * 20 + 20 + 'px';
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 3000);
+            }
+        }
+
+        function startGallery() {
             const photos = ['p1.jpeg','p2.jpeg','p3.jpeg','p4.jpeg','p5.jpeg','p6.jpeg','p7.jpeg','p8.jpeg','p9.jpeg','p10.jpeg','p11.jpeg','p12.jpeg','p13.jpeg','p14.jpeg'];
-            
-            // Photo Rain
             setInterval(() => {
                 const img = document.createElement('img');
                 img.src = photos[Math.floor(Math.random() * photos.length)];
@@ -144,25 +167,7 @@
                 img.style.left = Math.random() * 85 + 'vw';
                 document.body.appendChild(img);
                 setTimeout(() => img.remove(), 10000);
-            }, 1200);
-
-            // Love Particle Explosion
-            for(let i=0; i<50; i++) {
-                setTimeout(() => {
-                    const h = document.createElement('div');
-                    h.innerHTML = "💖";
-                    h.style.position = "absolute";
-                    h.style.left = "50%"; h.style.top = "50%";
-                    h.style.fontSize = "25px";
-                    h.style.transition = "3s ease-out";
-                    document.body.appendChild(h);
-                    setTimeout(() => {
-                        h.style.transform = `translate(${(Math.random()-0.5)*1200}px, ${(Math.random()-0.5)*1200}px) rotate(360deg)`;
-                        h.style.opacity = "0";
-                    }, 50);
-                    setTimeout(() => h.remove(), 3000);
-                }, i * 50);
-            }
+            }, 1500);
         }
 
         function typeWriter() {
